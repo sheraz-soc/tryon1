@@ -1,5 +1,5 @@
 const path = require("path");
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require("copy-webpack-plugin");
 
 module.exports = {
   entry: "./src/index.js",
@@ -12,7 +12,7 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.(wasm)|(bin)|(obj)$/i,
+        test: /\.(wasm|bin|obj)$/i,
         include: [
           path.resolve(__dirname, 'node_modules/deepar/'),
         ],
@@ -24,12 +24,16 @@ module.exports = {
         ],
         type: 'asset/resource',
       },
-      {
-        test: /\.css$/,  // Add this rule to handle CSS files
-        use: ["style-loader", "css-loader"],
-      },
     ],
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "public", to: "dist" },
+        { from: "node_modules/deepar", to: "dist/deepar-resources" },
+      ],
+    }),
+  ],
   resolve: {
     alias: {
       '@effects': path.resolve(__dirname, 'effects/'),
@@ -39,13 +43,6 @@ module.exports = {
     maxEntrypointSize: 1000000,
     maxAssetSize: 10000000,
   },
-  plugins: [
-    new CopyWebpackPlugin({
-      patterns: [
-        { from: 'public', to: '' }, // Copy everything from public/ to dist/
-      ],
-    }),
-  ],
   devServer: {
     static: [
       {
