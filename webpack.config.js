@@ -1,4 +1,5 @@
 const path = require("path");
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: "./src/index.js",
@@ -23,6 +24,10 @@ module.exports = {
         ],
         type: 'asset/resource',
       },
+      {
+        test: /\.css$/,  // Add this rule to handle CSS files
+        use: ["style-loader", "css-loader"],
+      },
     ],
   },
   resolve: {
@@ -34,6 +39,13 @@ module.exports = {
     maxEntrypointSize: 1000000,
     maxAssetSize: 10000000,
   },
+  plugins: [
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: 'public', to: '' }, // Copy everything from public/ to dist/
+      ],
+    }),
+  ],
   devServer: {
     static: [
       {
