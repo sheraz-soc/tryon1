@@ -12,7 +12,8 @@
   "devDependencies": {
     "webpack": "^5.74.0",
     "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.11.0"
+    "webpack-dev-server": "^4.11.0",
+    "copy-webpack-plugin": "^11.0.0"  // Add this line to install the plugin
   },
   "dependencies": {
     "deepar": "^5.4.1"
